@@ -1,0 +1,361 @@
+package StepDefinition;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import Webpages.Homepage;
+import Webpages.Optionpage;
+import Webpages.formpage;
+import Webpages.login;
+import cucumber.api.java.After;
+import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+
+
+public class method 
+{
+	
+	 WebDriver driver;
+	    login tc ;
+	    Homepage tc2;
+	  Optionpage tc3;
+	formpage tc4;
+	    @Before
+	    public void before()
+	    {
+	        System.setProperty("webdriver.chrome.driver","./driver/chromedriver.exe");  
+	        driver = new ChromeDriver();
+	        driver.manage().window().maximize();
+	    //    driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+	        driver.manage().timeouts().pageLoadTimeout(15,TimeUnit.SECONDS);
+	        tc = new login(driver);
+	        tc2 = new Homepage(driver);
+	     tc3= new Optionpage(driver);
+	        tc4 = new formpage(driver);
+	       
+	    }
+	 @Given("^clear the already created users before starting the scenario$")
+	    public void clear_the_already_created_users_before_starting_the_scenario() throws Throwable {
+	        System.out.println("welcome");
+	    }
+
+	    @Given("^user is on home page$")
+	    public void user_is_on_home_page() throws Throwable {
+	    	 driver.get("http://ndafile:8081/OnlineBankingProjectSpring/");
+	    }
+
+	    @Given("^user is on login page$")
+	    public void user_is_on_login_page() throws Throwable {
+	    	driver.get("http://ndafile:8081/OnlineBankingProjectSpring/AdminLogin.html");
+	    }
+
+	    @Given("^user is on reg page$")
+	    public void user_is_on_reg_page() throws Throwable {
+	    	driver.get("http://ndafile:8081/OnlineBankingProjectSpring/ValidateAdmin.html");
+	    }
+
+	    @Given("^user is on form page$")
+	    public void user_is_on_form_page() throws Throwable {
+	    	driver.get("http://ndafile:8081/OnlineBankingProjectSpring/AddAccountHolder.html");
+	    }
+
+	    @When("^valid details are given$")
+	    public void valid_details_are_given() throws Throwable {
+	    	tc.heading().click();
+	    	tc2.user().sendKeys("Admin");
+	    	tc2.password().sendKeys("Admin123");
+	    	tc2.login().click();
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail.com");
+	    	tc4.hadd().sendKeys("9876543210");
+	    	tc4.hpan().sendKeys("JFIUH12365");
+	    	Select val= new Select (tc4.acctype());
+            val.selectByVisibleText("current");
+	    
+	    	tc4.opbal().sendKeys("54321");
+	    	tc4.date().sendKeys("01-11-2019");
+	    	
+	    	Select val1= new Select (tc4.scrtq());
+            val.selectByVisibleText("What is your mothers name?");
+	    	tc4.answer().sendKeys("01-11-2019");
+	    	tc4.register().click();
+	    }
+
+	    @When("^user clicks on admin login$")
+	    public void user_clicks_on_admin_login() throws Throwable {
+	    	System.out.println("hello");
+	    }
+
+	    @When("^user left the field empty$")
+	    public void user_left_the_field_empty() throws Throwable {
+	    	tc2.user().sendKeys("");
+	    }
+
+	    @When("^user gives invalid details$")
+	    public void user_gives_invalid_details() throws Throwable {
+	    	tc2.user().sendKeys("Admi");
+	    }
+
+	    @When("^user left the password field empty$")
+	    public void user_left_the_password_field_empty() throws Throwable {
+	    	tc2.user().sendKeys("Admin");
+	    	tc2.password().sendKeys("");
+	    }
+
+	    @When("^user give invalid$")
+	    public void user_give_invalid() throws Throwable 
+	    {
+	    	tc2.user().sendKeys("Admin");
+	    	tc2.password().sendKeys("adm123");
+	    }
+
+	    @When("^user gives valid userid and password$")
+	    public void user_gives_valid_userid_and_password() throws Throwable {
+	    	tc2.user().sendKeys("Admin");
+	    	tc2.password().sendKeys("Admin123");
+	    }
+
+	    @When("^verify the title of reg page$")
+	    public void verify_the_title_of_reg_page() throws Throwable {
+	    	
+		       //  Assert.assertEquals("Admin login page",driver.getTitle());
+		         System.out.println(driver.getTitle());
+	    	
+	    }
+
+	    @When("^user left the card holder name field empty$")
+	    public void user_left_the_card_holder_name_field_empty() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("");
+	    	
+	    }
+
+	    @When("^user gives card holder name incorrect$")
+	    public void user_gives_card_holder_name_incorrect() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("dee");
+	    	
+	    }
+
+	    @When("^user left the address field empty$")
+	    public void user_left_the_address_field_empty() throws Throwable {
+	    	System.out.println("hello");
+	    }
+
+	    @When("^user left the pan no field empty$")
+	    public void user_left_the_pan_no_field_empty() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail.com");
+	    	tc4.hadd().sendKeys("9876543210");
+	    	tc4.hpan().sendKeys("");
+	    	
+	    }
+
+	    @When("^user gives the invalid pan no$")
+	    public void user_gives_the_invalid_pan_no() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail.com");
+	    	tc4.hadd().sendKeys("9876543210");
+	    	tc4.hpan().sendKeys("JFIUH1236544444");
+	    	Select val= new Select (tc4.acctype());
+            val.selectByVisibleText("current");
+	    
+	    	tc4.opbal().sendKeys("54321");
+	    	tc4.date().sendKeys("01-11-2019");
+	    	
+	    	Select val1= new Select (tc4.scrtq());
+            val.selectByVisibleText("What is your mothers name?");
+	    	tc4.answer().sendKeys("01-11-2019");
+	    	tc4.register().click();
+	    }
+
+	    @When("^user gives the invalid pan no details$")
+	    public void user_gives_the_invalid_pan_no_details() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail.com");
+	    	tc4.hadd().sendKeys("9876543210");
+	    	tc4.hpan().sendKeys("JF12365");
+	    	
+	    }
+
+	    @When("^user gives invalid email$")
+	    public void user_gives_invalid_email() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail");
+	    	
+	    }
+
+	    @When("^user gives invalid balance$")
+	    public void user_gives_invalid_balance() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail.com");
+	    	tc4.hadd().sendKeys("9876543210");
+	    	tc4.hpan().sendKeys("JFIUH12365");
+	    	Select val= new Select (tc4.acctype());
+            val.selectByVisibleText("current");
+	    
+	    	tc4.opbal().sendKeys("54321abc");
+	    	
+	    }
+
+	    @When("^user gives wrong date$")
+	    public void user_gives_wrong_date() throws Throwable {
+	    	
+	    	tc4.hname().sendKeys("deepika");
+	    	tc4.emailid().sendKeys("vrl@gmail.com");
+	    	tc4.hadd().sendKeys("9876543210");
+	    	tc4.hpan().sendKeys("JFIUH12365");
+	    	Select val= new Select (tc4.acctype());
+            val.selectByVisibleText("current");
+	    
+	    	tc4.opbal().sendKeys("54321");
+	    	tc4.date().sendKeys("");
+	    	
+	    }
+
+	    @Then("^clicks on registration$")
+	    public void clicks_on_registration() throws Throwable {
+	    	tc4.register().click();
+	    }
+
+	    @Then("^verify the title of home page$")
+	    public void verify_the_title_of_home_page() throws Throwable {
+	    	String expected = "Admin Login";
+	     String actual = tc.heading().getText();
+	         Assert.assertEquals(expected, actual);
+	    }
+
+	    @Then("^verify the login page$")
+	    public void verify_the_login_page() throws Throwable {
+	    	System.out.println("hello");
+	    }
+
+	    @Then("^Please enter userid$")
+	    public void please_enter_userid() throws Throwable {
+	    	System.out.println("Enter user id");
+	    }
+
+	    @Then("^invalid details$")
+	    public void invalid_details() throws Throwable {
+	    	System.out.println("Enter valid id");
+	    }
+
+	    @Then("^Please enter password$")
+	    public void please_enter_password() throws Throwable {
+	    	System.out.println("Enter password");
+	    }
+
+	    @Then("^invalid Credentials$")
+	    public void invalid_credentials() throws Throwable {
+	    	System.out.println("Enter valid password");
+	    }
+
+	    @Then("^display the options$")
+	    public void display_the_options() throws Throwable 
+	    {
+	    	//driver.get("http://ndafile:8081/OnlineBankingProjectSpring/ValidateAdmin.html");
+	    	System.out.println("hi");
+	    }
+
+	    @Then("^click on add new account link$")
+	    public void click_on_add_new_account_link() throws Throwable {
+	    	tc3.heading().click();
+	    }
+
+	    @Then("^verify the title of form page$")
+	    public void verify_the_title_of_form_page() throws Throwable {
+	    	String expected = "Account Holder Registration"; 
+	    	
+		     String actual = tc4.heading().getText();
+		         Assert.assertEquals(expected, actual);
+	    }
+
+	    @Then("^please fill the card holder name$")
+	    public void please_fill_the_card_holder_name() throws Throwable {
+	    	String expected = "Customer Name Can Not Be Empty"; 
+	    	
+		     String actual = tc4.errn().getText();
+		         Assert.assertEquals(expected, actual);
+	    	
+	    }
+
+	    @Then("^only charaters$")
+	    public void only_charaters() throws Throwable {
+	    	System.out.println("only charaters");
+	    }
+
+	    @Then("^please fill the address$")
+	    public void please_fill_the_address() throws Throwable {
+	    	System.out.println("hello");
+	    }
+
+	    @Then("^please fill the pan no$")
+	    public void please_fill_the_pan_no() throws Throwable {
+	    	System.out.println("fill pan number");
+	    }
+
+	    @Then("^please enter valid pan no$")
+	    public void please_enter_valid_pan_no() throws Throwable {
+	    	System.out.println("valid number");
+	    }
+
+	    @Then("^please enter valid pan no details$")
+	    public void please_enter_valid_pan_no_details() throws Throwable {
+	    	String expected = "Add New Account"; 
+	    	
+		     String actual = tc3.heading().getText();
+		     Assert.assertEquals(expected,actual);
+		     System.out.println("hello");
+	    }
+
+	    @Then("^please fill the email$")
+	    public void please_fill_the_email() throws Throwable {
+	    	System.out.println("Enter valid email id");
+	    }
+
+	    @Then("^please fill the correct balance$")
+	    public void please_fill_the_correct_balance() throws Throwable {
+	    	System.out.println("only digits should be given");
+	    }
+
+	    @Then("^automates to current date$")
+	    public void automates_to_current_date() throws Throwable {
+	    	System.out.println("corrects to current date");
+	    }
+
+	    @And("^clicks on Login$")
+	    public void clicks_on_login() throws Throwable {
+	    	tc2.login().click();
+	    }
+
+	    @And("^link of add new account$")
+	    public void link_of_add_new_account() throws Throwable {
+	    	String expected = "Add New Account"; 
+	    	
+		     String actual = tc3.heading().getText();
+		     Assert.assertEquals(expected,actual);
+		     System.out.println("hello");
+		     
+	    }
+	    @After
+	    public void after()
+	    {
+	        driver.quit();
+	    }
+
+	   
+
+
+}
